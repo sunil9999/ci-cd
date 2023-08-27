@@ -4,6 +4,7 @@ pipeline {
       image 'abhishekf5/maven-abhishek-docker-agent:v1'
       args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
     }
+
   }
     stages {
         stage ('SCM checkout'){
@@ -28,15 +29,16 @@ pipeline {
     }
         stage ('build and push docker image') {
             environment {
-                DOCKER_IMAGE = "sunilraju99/ci-cd:${BUILD_NUMBER}"
-                REGISTRY_CREDENTIALS = credentials('dockerhub')
+              DOCKER_IMAGE = "sunilraju99/ci-cd:${BUILD_NUMBER}"
+              REGISTRY_CREDENTIALS = credentials('dockerhub')
             }
           steps {
+            script {
                 sh 'docker build -t ${DOCKER_IMAGE} .'
                 def dockerImage = docker.image("${DOCKER_IMAGE}")
                 docker.withRegistry('https://index.docker.io/v1/', "dockerhub") {
                   dockerImage.push()
-
+                }
             }
         }
 }
