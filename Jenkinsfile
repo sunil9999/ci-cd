@@ -16,5 +16,14 @@ pipeline {
             sh 'mvn clean package'
           }
         }
+        stage ('Sonarqube code analysis') {
+            environment {
+                SONAR_URL = http://15.207.110.224:9000/
+            }
+          steps {
+            withCredentials([string(credentialsId: 'Sonarqube', variable: 'sonarqube')]) {
+              sh 'mvn sonar:sonar -Dsonar.login=$sonarqube -Dsonar.host.url=${SONAR_URL}'
+          }
+        }
     }
 }
