@@ -42,5 +42,24 @@ pipeline {
             }
         }
 }
+        stage('Update Deployment File') {
+        environment {
+            GIT_REPO_NAME = "ci-cd"
+            GIT_USER_NAME = "sunil9999"
+        }
+        steps {
+            withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
+                sh '''
+                    git config user.email "sunilraju20111@gmail.com"
+                    git config user.name "Sunil"
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" ci-cd/spring-boot-app-manifests/deployment.yml
+                    git add ci-cd/spring-boot-app-manifests/deployment.yml
+                    git commit -m "Update deployment image to version ${BUILD_NUMBER}"
+                    git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:test
+                '''
+            }
+}
+}
 }
 }
