@@ -1,6 +1,6 @@
 def registry = 'https://cdpipe.jfrog.io'
 def imageName = 'cdpipe.jfrog.io/cdpipe-docker/webapp'
-def version   = "${env.Build_ID}"
+def version   = "1"
 pipeline {
     agent {
         docker {
@@ -70,6 +70,13 @@ pipeline {
                echo '<--------------- Docker Publish End --------------->'  
             }
         }
+    }
+    stage ("Deploy") {
+      steps {
+        script {
+          sh './deploy.sh'
+        }
+      }
     }  
     }
 }
