@@ -36,7 +36,7 @@ pipeline {
                               "pattern": "target/(.jar)",
                               "target": "libs-release-local/{1}",
                               "flat": "false",
-                              "props" : "${properties}",
+                              "props" : "${properties}"
                             }
                          ]
                      }"""
