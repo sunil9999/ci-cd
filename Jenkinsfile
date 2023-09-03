@@ -74,7 +74,7 @@ pipeline {
     stage ("Deploy") {
       steps {
         script {
-          sh '/home/ubuntu/kubernetes/./deploy.sh'
+          sh './deploy.sh'
         }
       }
     }  
