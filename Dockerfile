@@ -1,3 +1,3 @@
-FROM openjdk:8
+FROM openjdk:11
 ADD target/spring-boot-web.jar webapp.jar
 ENTRYPOINT [ "java", "-jar", "webapp.jar"]
