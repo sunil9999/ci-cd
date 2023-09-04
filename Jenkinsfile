@@ -67,7 +67,7 @@ pipeline {
                 docker.withRegistry(registry, 'jfrog_cred'){
                     app.push()
                 }    
-               echo '<--------------- Docker Publish End --------------->'  
+               echo '<--------------- Docker Publish Ends --------------->'  
             }
         }
     }
